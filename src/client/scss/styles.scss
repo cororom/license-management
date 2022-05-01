@@ -1,0 +1,160 @@
+@import "bootstrap/dist/css/bootstrap.min.css";
+@import "bootstrap-icons/font/bootstrap-icons.css";
+//@import "./config/_reset.scss";
+
+@import "./components/sidebar";
+@import "./components/nav";
+
+body {
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+}
+
+html {
+  height: -webkit-fill-available;
+}
+
+main {
+  overflow-x: auto;
+  overflow-y: hidden;
+  background-color: #f3f3f3;
+  .flex-container {
+    display: flex;
+    padding: 0;
+  }
+  #content {
+    margin-bottom: 0 !important;
+  }
+  .sidebar,
+  .form-wrapper {
+    height: calc(100vh - 64px);
+  }
+  .table-wrapper {
+    width: 100%;
+    padding: 25px;
+    margin: 0 auto;
+    .bg-thead {
+      background-color: #005baa;
+    }
+  }
+  .form-wrapper {
+    width: 100%;
+    form {
+      padding: 1.5rem;
+      height: 100%;
+    }
+  }
+}
+
+.signin-wrapper {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #f5f5f5;
+  height: 100%;
+  min-height: 100vh;
+  .form-signin {
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;
+  }
+  .form-signin .checkbox {
+    font-weight: 400;
+  }
+  .form-signin .form-control {
+    font-size: 16px;
+  }
+  .form-signin input[type="text"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  .form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+}
+
+.bd-navbar {
+  padding: 0.75rem 0;
+  background-color: #005baa;
+}
+
+.btn-bd-login {
+  font-weight: 600;
+  color: #b7cadb;
+  border-color: #b7cadb;
+  &:hover {
+    color: white;
+  }
+}
+
+@keyframes goAway {
+  from {
+    transform: none;
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+}
+
+.message {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  max-width: 300px;
+  padding: 10px;
+  border-radius: 7px;
+  animation: goAway 0.5s ease-in-out forwards;
+  animation-delay: 5s;
+  box-shadow: rgb(0 0 0 / 45%) 0px 25px 20px -20px;
+  display: flex;
+  background-color: white;
+  .message__icon {
+    display: block;
+    & i {
+      font-size: 32px;
+    }
+  }
+  &.error {
+    border-left: 7px solid #fd6262;
+    .message__icon {
+      color: #fd6262;
+    }
+  }
+  &.info {
+    border-left: 7px solid #ffc12b;
+    .message__icon {
+      color: #ffc12b;
+    }
+  }
+  &.success {
+    border-left: 7px solid #4ac860;
+    .message__icon {
+      color: #4ac860;
+    }
+  }
+  .message__text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 10px;
+    line-height: 16px;
+    .title {
+      color: #495057;
+      font-weight: 700;
+    }
+    .subtitle {
+      color: #adb5bd;
+    }
+  }
+}

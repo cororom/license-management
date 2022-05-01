@@ -1,0 +1,11 @@
+extends base
+include mixins/board
+include mixins/pagination
+
+block content
+    div.container.flex-container
+        include partials/sidebar
+        div.table-wrapper.bg-white
+
+block scripts
+    script(src="/static/js/sidebar.js")

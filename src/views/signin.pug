@@ -1,0 +1,31 @@
+include mixins/message
+
+doctype html
+html(lang="ko")
+    head
+        title License Management
+        link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Icons")
+        link(rel="stylesheet" href="/static/css/styles.css")
+    body
+        if messages.error
+            +message("error", messages.error)
+        if messages.info
+            +message("info", messages.info)
+        if messages.success
+            +message("success", messages.success)
+        div.text-center.signin-wrapper
+            form(method="POST").form-signin
+                img(src="https://jungbo.net/images/common/logo.png" alt="").mb-4
+                h1.h3.mb-3.fw-normal Login
+                div.form-floating
+                    input(type="text" name="username" placeholder="Id").form-control#floatingInput
+                    label(for="floatingInput") Id
+                div.form-floating
+                    input(type="password" name="password" placeholder="Password").form-control.floatingPassword
+                    label(for="floatingPasswrod") Password
+                div.checkbox.mb-3
+                    label
+                        input(type="checkbox" value="remember-me")
+                        span  Remember me 
+                button(type="submit" value="Sign in").w-100.btn.btn-lg.btn-primary Sign in
+                p.mt-5.mb-3.text-muted &copy; JUNGBONET #{new Date().getFullYear()}

@@ -1,0 +1,30 @@
+header.navbar.navbar-expand-md.navbar-dark.bd-navbar 
+    nav(aria-label="Main navigation").container-xxl.flex-wrap.flex-md-nowrap
+        a(href="/" aria-label="Bootstrap").navbar-brand.p-0.me-2 JUNGBONET
+
+        div.collapse.navbar-collapse#bdNavbar
+            ul.navbar-nav.flex-row.flex-wrap.bd-navbar-nav.pt-2.py-md-0
+                li.nav-item.col-6.col-md-auto
+                    if baseUrl === ""
+                        a(aria-current="page" href="/").nav-link.p-2.active Home
+                    else
+                        a(aria-current="page" href="/").nav-link.p-2 Home
+                li.nav-item.col-6.col-md-auto
+                    if baseUrl === "/licenses"
+                        a(href="/licenses/post/1").nav-link.p-2.active Setting
+                    else
+                        a(href="/licenses/post/1").nav-link.p-2 Setting
+                li.nav-item.col-6.col-md-auto
+                    if baseUrl === "/assignments"
+                        a(href="/assignments/post/1").nav-link.p-2.active Share
+                    else
+                        a(href="/assignments/post/1").nav-link.p-2 Share
+
+            hr.d-md-none.text-white-50
+            ul.navbar-nav.flex-row.flex-wrap.ms-md-auto
+
+            if loggedIn === true
+                a(href="/logout").btn.btn-bd-login.d-lg-inline-block.my-2.my-md-0.ms-md-3 Logout
+            else
+                a(href="/login").btn.btn-bd-login.d-lg-inline-block.my-2.my-md-0.ms-md-3 Login
+        </div>

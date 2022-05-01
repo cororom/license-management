@@ -1,0 +1,44 @@
+mixin licenseBoard(board, pagingCounter)
+    each row, index in board
+        tr
+            th(scope="row") #{index + pagingCounter}
+                td
+                    a(href=`/assignments/post/1?target=license&keyword=${row._id}`)=row.serial
+                td=row.company
+                td=row.name
+                td #{new Date(row.issuedDate).toISOString().slice(0, 10)}
+                td #{new Date(row.expirationDate).toISOString().slice(0, 10)}
+                td=row.activeCount
+                td=row.maxSeates
+                td
+                    if loggedIn === true
+                        div.d-grid.gap-1.d-md-flex
+                            a(href=`/licenses/${row._id}/edit`)
+                                button.btn.btn-outline-primary Edit
+                            a(href=`/licenses/${row._id}/delete`)
+                                button.btn.btn-outline-primary Delete
+    else
+        tr
+            td(colspan="9").board__empty NOT FOUND
+
+mixin assignmentBoard(board, pagingCounter)
+    each row, index in board
+        tr
+            th(scope="row") #{index + pagingCounter}
+                td=row.serial
+                td=row.ip
+                td=row.company
+                td=row.user
+                td=row.assignedNumbers
+                td #{new Date(row.activationDate).toISOString().slice(0, 10)}
+                td #{new Date(row.expirationDate).toISOString().slice(0, 10)}
+                td
+                    if loggedIn === true
+                        div.d-grid.gap-1.d-md-flex
+                            a(href=`/assignments/${row._id}/edit`)
+                                button.btn.btn-outline-primary Edit
+                            a(href=`/assignments/${row._id}/delete`)
+                                button.btn.btn-outline-primary Delete
+    else
+        tr
+            td(colspan="9").board__empty NOT FOUND

@@ -1,0 +1,18 @@
+mixin pagination(board, query)
+    nav(aria-label="Page navigation example")
+        ul.pagination.justify-content-center
+            if (board.hasPrevPage === true)
+                li.page-item
+                    a(href=`${board.prevPage}` aria-label="Previous").page-link
+                        span(aria-hidden="true") &laquo;
+            each page in board.pageList
+                if board.page === page
+                    li(aria-current="page").page-item.active
+                        a(href=`${(query.keyword === undefined) ? page : page + "?keyword=" + query.keyword}`).page-link=page
+                else
+                    li.page-item
+                        a(href=`${(query.keyword === undefined) ? page : page + "?keyword=" + query.keyword}`).page-link=page
+            if (board.hasNextPage === true)
+                li.page-item
+                    a(href=`${board.nextPage}` aria-label="Next").page-link
+                        span(aria-hidden="true") &raquo;

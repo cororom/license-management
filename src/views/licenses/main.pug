@@ -1,0 +1,45 @@
+extends ../base
+include ../mixins/board
+include ../mixins/pagination
+
+block content
+    div.container.flex-container
+        include ../partials/sidebar
+        div.table-wrapper.bg-white
+            form(method="GET" action="/licenses/post/1")
+                div.mb-2
+                    div.d-flex.justify-content-end
+                        select(name="target").form-select.w-25
+                            option(value="" selected) ALL
+                            option(value="company") Company
+                            option(value="name") Name
+                        input(name="keyword").form-control.w-50
+            table.table.table-hover.bg-white
+                thead.bg-thead.text-white
+                    tr
+                        th(scope="col") #
+                        th(scope="col") Serial
+                        th(scope="col") Company
+                        th(scope="col") Name
+                        th(scope="col") issued
+                        th(scope="col") Expiration
+                        th(scope="col") Active
+                        th(scope="col") Max
+                        th(scrop="col") Action
+                tbody
+                    +licenseBoard(board.docs, board.pagingCounter)
+
+            div.d-flex.justify-content-between.align-items-center
+                div    
+                    if loggedIn === true
+                        div.d-grid.gap-1.d-md-flex.justify-content-md-end
+                            a(href="/licenses/add")
+                                button.btn.btn-outline-primary Write
+                            //-a(href="/licenses/delete")
+                                button.btn.btn-outline-primary Delete
+                div
+                    +pagination(board, query)
+
+block scripts
+    script(src="/static/js/sidebar.js")
+    script(src="/static/js/license.js") 

@@ -1,0 +1,44 @@
+extends ../base
+
+block content
+    if messages.error
+        +message("error", messages.error)
+    if messages.info
+        +message("info", messages.info)
+    if messages.success
+        +message("success", messages.success)
+    div.container.flex-container
+        include ../partials/sidebar
+        div.form-wrapper
+            form(method="POST").bg-white
+                div.m-2
+                    label(for="serial").form-label Serial
+                    input(type="text" name="serial" required).form-control.assignment__serial
+                div.m-2
+                    label(for="ip").form-label Ip
+                    input(type="text" name="ip" required).form-control.assignment__ip
+                div.m-2
+                    label(for="company").form-label Company
+                    input(type="text" name="company" required).form-control.assignment__company
+                div.m-2
+                    label(for="name").form-label Name
+                    input(type="text" name="name" required).form-control.assignment__name
+                div.m-2
+                    label(for="user").form-label User
+                    input(type="text" name="user" required).form-control.assignment__user
+                div.m-2
+                    label(for="assignedNumbers").form-label assignedNumbers
+                    input(type="number" name="assignedNumbers" min="0" required).form-control.assignment__number
+                div.m-2
+                    label(for="activationDate").form-label activation Date
+                    input(type="date" name="activationDate" required).form-control.license__activation
+                div.m-2
+                    label(for="expirationDate").form-label Expiration Date
+                    input(type="date" name="expirationDate" required).form-control.license__expiration
+                div.m-2
+                    label(for="memo").form-label Memo
+                    textarea(name="memo" rows="3").form-control
+                hr.my-4.m-2
+                div.m-2
+                    button(type="submit").w-100.btn.btn-primary.btn-lg Submit
+

@@ -1,0 +1,35 @@
+extends ../base
+
+block content
+    div.container.flex-container
+        include ../partials/sidebar
+        div.form-wrapper
+            form(method="POST").bg-white
+                div.m-2
+                    label(for="serial").form-label Serial
+                    input(type="text" name="serial" value=license.serial required).form-control.license__serial
+                div.m-2
+                    label(for="company").form-label Company
+                    input(type="text" name="company" value=license.company required).form-control.license__company
+                div.m-2
+                    label(for="name").form-label Name
+                    input(type="text" name="name" value=license.name required).form-control.license__name
+                div.m-2
+                    label(for="issuedDate").form-label Issued Date
+                    input(type="date" name="issuedDate" value=`${moment(license.issuedDate).format("YYYY-MM-DD")}` required).form-control.license__issued
+                div.m-2
+                    label(for="expirationDate").form-label Expiration Date
+                    input(type="date" name="expirationDate" value=`${moment(license.expirationDate).format("YYYY-MM-DD")}` required).form-control.license__expiration
+                //- div.m-2
+                //-     label(for="activeSeats").form-label Active
+                //-     input(type="number" name="activeSeats" min="0" required).form-control.license__active
+                div.m-2
+                    label(for="maxSeates").form-label Max
+                    input(type="number" name="maxSeates" min="0" value=license.maxSeates required).form-control.license__max
+                div.m-2
+                    label(for="memo").form-label Memo
+                    textarea(name="memo" rows="3").form-control=license.memo
+                hr.my-4.m-2
+                div.m-2
+                    button(type="submit").w-100.btn.btn-primary.btn-lg Submit
+
