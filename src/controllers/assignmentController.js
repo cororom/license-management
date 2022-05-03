@@ -1,6 +1,6 @@
 import License from "../models/License";
 import Assignment from "../models/Assignment";
-import { getBoard, getMenu } from "./boardController";
+import { getBoard, getMenu, getSearhQuery } from "./boardController";
 import url from "url";
 import moment from "moment";
 
@@ -37,14 +37,29 @@ export const getAssignment = async (req, res) => {
 };
 
 export const getAdd = async (req, res) => {
+  const {
+    query: { target, keyword },
+  } = req;
+  let params = {};
+  if (keyword !== undefined) {
+    if (target === "license") {
+      const licenseData = await License.findById(keyword);
+      params = {
+        serial: License.decrypt(licenseData.serial),
+        company: licenseData.company,
+        name: licenseData.name,
+      };
+    }
+  }
   const menu = await getMenu();
   const baseUrl = req.baseUrl;
-  return res.render("assignments/add", { menu, baseUrl });
+  return res.render("assignments/add", { menu, baseUrl, params });
 };
 
 export const postAdd = async (req, res) => {
   const {
     body: { serial, ip, company, name, user, assignedNumbers, activationDate, expirationDate, memo },
+    query,
   } = req;
   let license = "";
   const licenseAll = await License.find();
@@ -54,11 +69,10 @@ export const postAdd = async (req, res) => {
       license = theArray[index];
     }
   });
-  if (license.maxSeates < license.activeCount + assignedNumbers) {
+  if (license.maxSeates < license.activeCount + parseInt(assignedNumbers)) {
     req.flash("error", "maxSeates check");
     return res.redirect("back");
   }
-  //const encrypt = await License.encrypt(serial);
   const assignment = await Assignment.create({
     license: license._id,
     ip,
@@ -77,13 +91,14 @@ export const postAdd = async (req, res) => {
   license.activeSeats.push(assignment._id);
   license.activeCount = assignedNumbers;
   await license.save();
-  return res.status(200).redirect("/assignments/post/1");
+  const queryUrl = getSearhQuery(query);
+  return res.status(200).redirect(`/assignments/post/1${queryUrl}`);
 };
 
 export const deleteAssignment = async (req, res) => {
   const {
     params: { id },
-    headers: { referer },
+    query,
   } = req;
   try {
     const license = await License.find({ activeSeats: { $in: [id] } });
@@ -95,7 +110,8 @@ export const deleteAssignment = async (req, res) => {
     req.flash("error", error);
     return res.status(500).redirect("back");
   }
-  return res.status(200).redirect("/assignments/post/1");
+  const queryUrl = getSearhQuery(query);
+  return res.status(200).redirect(`/assignments/post/1${queryUrl}`);
 };
 
 export const getEdit = async (req, res) => {
@@ -112,9 +128,9 @@ export const getEdit = async (req, res) => {
 export const postEdit = async (req, res) => {
   const {
     params: { id },
-    body: { serial, ip, company, user, assignedNumbers, activationDate, expirationDate, memo },
+    body: { ip, company, user, assignedNumbers, activationDate, expirationDate, memo },
+    query,
   } = req;
-  //const encrypt = await License.encrypt(serial);
   try {
     await Assignment.findByIdAndUpdate(id, {
       ip,
@@ -129,5 +145,6 @@ export const postEdit = async (req, res) => {
     req.flash("error", error);
     return res.status(500).redirect("back");
   }
-  return res.status(200).redirect("/assignments/post/1");
+  const queryUrl = getSearhQuery(query);
+  return res.status(200).redirect(`/assignments/post/1${queryUrl}`);
 };

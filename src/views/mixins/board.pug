@@ -1,7 +1,7 @@
-mixin licenseBoard(board, pagingCounter)
-    each row, index in board
+mixin licenseBoard(board, query)
+    each row, index in board.docs
         tr
-            th(scope="row") #{index + pagingCounter}
+            th(scope="row") #{index + board.pagingCounter}
                 td
                     a(href=`/assignments/post/1?target=license&keyword=${row._id}`)=row.serial
                 td=row.company
@@ -13,18 +13,24 @@ mixin licenseBoard(board, pagingCounter)
                 td
                     if loggedIn === true
                         div.d-grid.gap-1.d-md-flex
-                            a(href=`/licenses/${row._id}/edit`)
-                                button.btn.btn-outline-primary Edit
-                            a(href=`/licenses/${row._id}/delete`)
-                                button.btn.btn-outline-primary Delete
+                            if query.keyword !== undefined
+                                a(href=`/licenses/${row._id}/edit?target=${query.target}&keyword=${query.keyword}`)
+                                    button.btn.btn-outline-primary Edit
+                                a(href=`/licenses/${row._id}/delete?target=${query.target}&keyword=${query.keyword}`)
+                                    button.btn.btn-outline-primary Delete
+                            else
+                                a(href=`/licenses/${row._id}/edit`)
+                                    button.btn.btn-outline-primary Edit
+                                a(href=`/licenses/${row._id}/delete`)
+                                    button.btn.btn-outline-primary Delete
     else
         tr
             td(colspan="9").board__empty NOT FOUND
 
-mixin assignmentBoard(board, pagingCounter)
-    each row, index in board
+mixin assignmentBoard(board, query)
+    each row, index in board.docs
         tr
-            th(scope="row") #{index + pagingCounter}
+            th(scope="row") #{index + board.pagingCounter}
                 td=row.serial
                 td=row.ip
                 td=row.company
@@ -35,10 +41,16 @@ mixin assignmentBoard(board, pagingCounter)
                 td
                     if loggedIn === true
                         div.d-grid.gap-1.d-md-flex
-                            a(href=`/assignments/${row._id}/edit`)
-                                button.btn.btn-outline-primary Edit
-                            a(href=`/assignments/${row._id}/delete`)
-                                button.btn.btn-outline-primary Delete
+                            if query.keyword !== undefined
+                                a(href=`/assignments/${row._id}/edit?target=${query.target}&keyword=${query.keyword}`)
+                                    button.btn.btn-outline-primary Edit
+                                a(href=`/assignments/${row._id}/delete?target=${query.target}&keyword=${query.keyword}`)
+                                    button.btn.btn-outline-primary Delete
+                            else
+                                a(href=`/assignments/${row._id}/edit`)
+                                    button.btn.btn-outline-primary Edit
+                                a(href=`/assignments/${row._id}/delete`)
+                                    button.btn.btn-outline-primary Delete
     else
         tr
             td(colspan="9").board__empty NOT FOUND

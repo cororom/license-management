@@ -6,13 +6,19 @@ block content
         div.form-wrapper
             form(method="POST").bg-white
                 div.m-2
-                    label(for="serial").form-label Serial
+                    select(name="type" aria-label="Default select" required).form-select
+                        option type select menu
+                        option(value="monthly") monthly
+                        option(value="yearly") yearly
+                        option(value="lifetime") lifetime
+                div.m-2
+                    label(for="serial").form-label License Serial
                     input(type="text" name="serial" required).form-control.license__serial
                 div.m-2
-                    label(for="company").form-label Company
+                    label(for="company").form-label License Company
                     input(type="text" name="company" required).form-control.license__company
                 div.m-2
-                    label(for="name").form-label Name
+                    label(for="name").form-label License Name
                     input(type="text" name="name" required).form-control.license__name
                 div.m-2
                     label(for="issuedDate").form-label Issued Date

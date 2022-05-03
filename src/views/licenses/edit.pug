@@ -6,6 +6,21 @@ block content
         div.form-wrapper
             form(method="POST").bg-white
                 div.m-2
+                    select(name="type" aria-label="Default select" required).form-select
+                        option type select menu
+                        if license.type === "monthly"
+                            option(value="monthly" selected) monthly
+                            option(value="yearly") yearly
+                            option(value="lifetime") lifetime
+                        if license.type === "yearly"
+                            option(value="monthly") monthly
+                            option(value="yearly" selected) yearly
+                            option(value="lifetime") lifetime
+                        if license.type === "lifetime"
+                            option(value="monthly") monthly
+                            option(value="yearly") yearly
+                            option(value="lifetime" selected) lifetime
+                div.m-2
                     label(for="serial").form-label Serial
                     input(type="text" name="serial" value=license.serial required).form-control.license__serial
                 div.m-2

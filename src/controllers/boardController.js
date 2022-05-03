@@ -55,3 +55,12 @@ export const getMenu = async () => {
   });
   return menu;
 };
+
+export const getSearhQuery = (query) => {
+  const { target, keyword } = query;
+  let queryUrl = "";
+  if (keyword !== undefined) {
+    queryUrl = `?target=${target}&keyword=${keyword}`;
+  }
+  return queryUrl;
+};

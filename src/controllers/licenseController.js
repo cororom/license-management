@@ -1,6 +1,7 @@
 import License from "../models/License";
-import { getBoard, getMenu } from "./boardController";
+import { getBoard, getMenu, getSearhQuery } from "./boardController";
 import moment from "moment";
+import Assignment from "../models/Assignment";
 
 export const home = async (req, res) => {
   const menu = await getMenu();
@@ -46,13 +47,6 @@ export const getLicense = async (req, res) => {
   return res.render("licenses/main", { board, menu, query, baseUrl });
 };
 
-export const postLicense = (req, res) => {
-  const {
-    params: { page },
-    body: { serial, company, name, issuedDate, expirationDate, activeSeats, maxSeates, memo },
-  } = req;
-};
-
 export const getAdd = async (req, res) => {
   const menu = await getMenu();
   const baseUrl = req.baseUrl;
@@ -61,7 +55,8 @@ export const getAdd = async (req, res) => {
 
 export const postAdd = async (req, res) => {
   const {
-    body: { serial, company, name, issuedDate, expirationDate, activeSeats, maxSeates, memo },
+    body: { serial, company, name, issuedDate, expirationDate, maxSeates, type, memo },
+    query,
   } = req;
   const encrypt = await License.encrypt(serial);
   const license = await License.create({
@@ -71,27 +66,35 @@ export const postAdd = async (req, res) => {
     issuedDate,
     expirationDate,
     maxSeates,
+    type,
     memo,
   });
   if (!license) {
     req.flash("error", "작성 실패");
     return res.status(500).redirect("back");
   }
-  return res.status(200).redirect("/licenses/post/1");
+  const queryUrl = getSearhQuery(query);
+  return res.status(200).redirect(`/licenses/post/1${queryUrl}`);
 };
 
 export const deleteLicense = async (req, res) => {
   const {
     params: { id },
-    headers: { referer },
+    query,
   } = req;
   try {
+    const shared = await Assignment.find({ license: id });
+    if (shared.length > 0) {
+      req.flash("error", "This license shared.");
+      return res.status(400).redirect("back");
+    }
     await License.findByIdAndDelete(id);
   } catch (error) {
     req.flash("error", error);
     return res.status(500).redirect("back");
   }
-  return res.status(200).redirect("/licenses/post/1");
+  const queryUrl = getSearhQuery(query);
+  return res.status(200).redirect(`/licenses/post/1${queryUrl}`);
 };
 
 export const getEdit = async (req, res) => {
@@ -108,7 +111,8 @@ export const getEdit = async (req, res) => {
 export const postEdit = async (req, res) => {
   const {
     params: { id },
-    body: { serial, company, name, issuedDate, expirationDate, activeSeats, maxSeates, memo },
+    body: { serial, company, name, issuedDate, expirationDate, maxSeates, type, memo },
+    query,
   } = req;
   const encrypt = await License.encrypt(serial);
   try {
@@ -119,11 +123,13 @@ export const postEdit = async (req, res) => {
       issuedDate,
       expirationDate,
       maxSeates,
+      type,
       memo,
     });
   } catch (error) {
     req.flash("error", error);
     return res.status(500).redirect("back");
   }
-  return res.status(200).redirect("/licenses/post/1");
+  const queryUrl = getSearhQuery(query);
+  return res.status(200).redirect(`/licenses/post/1${queryUrl}`);
 };

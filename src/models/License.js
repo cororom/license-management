@@ -11,6 +11,7 @@ const licenseSchema = new mongoose.Schema({
   activeSeats: [{ type: mongoose.Schema.Types.ObjectId, ref: "Assignment" }],
   activeCount: { type: Number, required: true, default: 0 },
   maxSeates: { type: Number, required: true },
+  type: { type: String, required: true },
   memo: { type: String },
 });
 

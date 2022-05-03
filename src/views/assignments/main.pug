@@ -27,14 +27,18 @@ block content
                         th(scope="col") Expiration
                         th(scrop="col") Action
                 tbody
-                    +assignmentBoard(board.docs, board.pagingCounter)
+                    +assignmentBoard(board, query)
 
             div.d-flex.justify-content-between.align-items-center
                 div    
                     if loggedIn === true
                         div.d-grid.gap-1.d-md-flex.justify-content-md-end
-                            a(href="/assignments/add")
-                                button.btn.btn-outline-primary Write
+                            if (query.keyword === undefined) 
+                                a(href="/assignments/add")
+                                    button.btn.btn-outline-primary Write
+                            else
+                                a(href=`/assignments/add?target=${query.target}&keyword=${query.keyword}`)
+                                    button.btn.btn-outline-primary Write
                             //-a(href="/assignments/delete")
                                 button.btn.btn-outline-primary Delete
                 div
