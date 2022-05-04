@@ -33,12 +33,10 @@ block content
                 div    
                     if loggedIn === true
                         div.d-grid.gap-1.d-md-flex.justify-content-md-end
-                            if (query.keyword === undefined) 
-                                a(href="/assignments/add")
-                                    button.btn.btn-outline-primary Write
-                            else
-                                a(href=`/assignments/add?target=${query.target}&keyword=${query.keyword}`)
-                                    button.btn.btn-outline-primary Write
+                            if (query.keyword !== undefined)
+                                if (query.target === "license")
+                                    a(href=`/assignments/add?target=${query.target}&keyword=${query.keyword}`)
+                                        button.btn.btn-outline-primary Write
                             //-a(href="/assignments/delete")
                                 button.btn.btn-outline-primary Delete
                 div

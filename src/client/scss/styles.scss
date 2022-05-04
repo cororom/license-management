@@ -16,18 +16,16 @@ html {
 
 main {
   overflow-x: auto;
-  overflow-y: hidden;
+  overflow-y: auto;
   background-color: #f3f3f3;
   .flex-container {
     display: flex;
     padding: 0;
+    min-height: calc(100vh - 64px);
+    height: 100%;
   }
   #content {
     margin-bottom: 0 !important;
-  }
-  .sidebar,
-  .form-wrapper {
-    height: calc(100vh - 64px);
   }
   .table-wrapper {
     width: 100%;
