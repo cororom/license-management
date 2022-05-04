@@ -101,7 +101,7 @@ export const deleteAssignment = async (req, res) => {
     query,
   } = req;
   try {
-    const license = await License.find({ activeSeats: { $in: [id] } });
+    const license = await License.findOne({ activeSeats: { $in: [id] } });
     const assignment = await Assignment.findByIdAndDelete(id);
     license.activeSeats.splice(license.activeSeats.indexOf(id), 1);
     license.activeCount = license.activeCount - assignment.assignedNumbers;
@@ -128,13 +128,14 @@ export const getEdit = async (req, res) => {
 export const postEdit = async (req, res) => {
   const {
     params: { id },
-    body: { ip, company, user, assignedNumbers, activationDate, expirationDate, memo },
+    body: { ip, company, name, user, assignedNumbers, activationDate, expirationDate, memo },
     query,
   } = req;
   try {
     await Assignment.findByIdAndUpdate(id, {
       ip,
       company,
+      name,
       user,
       assignedNumbers,
       activationDate,

@@ -6,11 +6,17 @@ block content
         div.form-wrapper
             form(method="POST").bg-white
                 div.m-2
-                    label(for="serial").form-label Serial
-                    input(type="text" name="serial" value=assignment.serial required).form-control.assignment__serial
+                    label(for="serial").form-label License Serial
+                    input(type="text" name="serial" value=assignment.serial readonly).form-control.assignment__serial
                 div.m-2
-                    label(for="company").form-label Company
+                    label(for="ip").form-label Ip
+                    input(type="text" name="ip" value=assignment.ip required).form-control.assignment__ip
+                div.m-2
+                    label(for="company").form-label License Company
                     input(type="text" name="company" value=assignment.company required).form-control.assignment__company
+                div.m-2
+                    label(for="name").form-label License Name
+                    input(type="text" name="name" value=assignment.name required).form-control.assignment__name
                 div.m-2
                     label(for="user").form-label User
                     input(type="text" name="user" value=assignment.user required).form-control.assignment__name
