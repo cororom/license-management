@@ -8,8 +8,8 @@ div.mb-3#content
                 ul.list-unstyled.ps-0
                     each rows, key in menu
                         li.mb-1
-                            button(data-bs-toggle="collapse" data-bs-target=`#home-collapse-${key.replace(/\s/gi, '')}` aria-expanded="true").btn.btn-toggle.align-items-center.rounded.collapsed=key
-                            div(id=`home-collapse-${key.replace(/\s/gi, '')}`).collapse.show
+                            button(data-bs-toggle="collapse" data-bs-target=`#home-collapse-${key.replace(/\s/gi, '')}` aria-expanded="false").btn.btn-toggle.align-items-center.rounded.collapsed=key
+                            div(id=`home-collapse-${key.replace(/\s/gi, '')}`).collapse
                                 ul.btn-toggle-nav.list-unstyled.fw-normal.pb-1.small
                                     each row in rows
                                         li
